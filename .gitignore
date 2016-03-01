@@ -2,3 +2,5 @@ data/
 *.pyc
 profile_pics/
 profile_pics_resize/
+.idea/
+.DS_Store

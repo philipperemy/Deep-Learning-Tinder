@@ -16,8 +16,7 @@ headers = {
 
 # get your tinder token here https://gist.github.com/rtt/10403467
 fb_id = 'philippe.remy185'
-fb_auth_token = 'CAAGm0PX4ZCpsBAMy8S0zK4zd0RBKmlJWh0YZAvIgY6NXqzGoMeQnT4ZBpdZBQmxNVinKDdYGvfaF5eb6tlGTMBvvkX5RrRsRsuIYsfRNX1LKxCC8mGlKRxvLfqZCpCrsftsuEylI193T57OcBSVJ61IToCoekPTFLLrXUopw8o2YKd7QzRdVJ7qMdhsxjeZAR8Qnhzf8zZAtgZDZD'
-
+fb_auth_token = 'CAAGm0PX4ZCpsBAGDFrnVjS119I62PvogRUbDaIH2LHHKgtUKJmTqte8yPir8vz7ws8zwq00gLUTslNxKqiSXPPZBOZAxnL9lOMou6fX75A0hL51ExRfDW3MaWIieF35YpRvJZC50Iim079PVZB1l240p7KEELE4x1WN2LSTkCZAqsRUMKocSeaoYTVBMeEZAfHUOZAzclrZCBfQZDZD'
 
 class User(object):
     def __init__(self, data_dict):
@@ -120,6 +119,17 @@ def like_or_nope():
     return 'nope' if randint(1, 100) == 31 else 'like'
 
 
+def change_location():
+    req = requests.post(
+            'https://api.gotindaer.com/user/ping',
+        data=json.dumps({'lat': 39.9167, 'lon': 116.3833})
+    )
+    try:
+        return req.json()
+    except:
+        return None
+
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Tinder automated bot')
@@ -139,6 +149,10 @@ if __name__ == '__main__':
         if not token:
             print 'could not get token'
             sys.exit(0)
+
+        # print "try to update location"
+        # print change_location()
+        # print "location updated"
 
         for user in recommendations(token):
             if not user:
