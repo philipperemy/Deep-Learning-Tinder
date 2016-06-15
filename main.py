@@ -1,11 +1,14 @@
+#!/usr/bin/env python
+
 import argparse
-from datetime import datetime
 import json
-from random import randint
-import requests
+import os
 import sys
 import urllib
-import os
+from random import randint
+
+import requests
+from datetime import datetime
 
 # super LIKE '/like/' + likedUserId + '/super'
 
@@ -14,9 +17,12 @@ headers = {
     'platform': 'ios',
 }
 
+# https://www.facebook.com/connect/login_success.html#access_token=EAAGm0PX4ZCpsBALpCKwbGaPYlWOi9oOQs91YLpm1fWZB1pZBMaAfz3okCnx4JvDtho5pGT28OdCVIdvPPePW9lVTnV8BhTxyZAmW3lrfS1KZAWsDjH0ci6juoY55lZAikCTGOZBieqQoviZCgS9dYbUa07CaB5nP4kTflMb0ZAiinogZDZD&expires_in=6217
+
 # get your tinder token here https://gist.github.com/rtt/10403467
-fb_id = 'philippe.remy185'
-fb_auth_token = 'CAAGm0PX4ZCpsBAGDFrnVjS119I62PvogRUbDaIH2LHHKgtUKJmTqte8yPir8vz7ws8zwq00gLUTslNxKqiSXPPZBOZAxnL9lOMou6fX75A0hL51ExRfDW3MaWIieF35YpRvJZC50Iim079PVZB1l240p7KEELE4x1WN2LSTkCZAqsRUMKocSeaoYTVBMeEZAfHUOZAzclrZCBfQZDZD'
+fb_id = 'philippe.remy.161'
+fb_auth_token = 'EAAGm0PX4ZCpsBAGRf6fFwCGyFR2rywZB14XbEZAoWM6OszX3VDFemkUjaSH2ZCuPcwypUekjPEFfcHE1ZCK3mzbGA93syZCKVQugd7YZBkXPZAVgJAFZBKbBBrvRNVmneQPk3WKsu2IrBC36t8CbluaZCcOI8k4vn6cAsHUVMT2MyVTgZDZD'
+
 
 class User(object):
     def __init__(self, data_dict):
@@ -97,6 +103,16 @@ def recommendations(auth_token):
         yield User(result)
 
 
+def super_like(user_id):
+    try:
+        u = 'https://api.gotinder.com/like/%s/super' % user_id
+        d = requests.get(u, headers=headers, timeout=0.7).json()
+    except KeyError:
+        raise
+    else:
+        return d['match']
+
+
 def like(user_id):
     try:
         u = 'https://api.gotinder.com/like/%s' % user_id
@@ -119,10 +135,52 @@ def like_or_nope():
     return 'nope' if randint(1, 100) == 31 else 'like'
 
 
-def change_location():
+def get_headers(tinder_token):
+
+    return {'host': 'api.gotinder.com',
+                    'Authorization': "Token token='#{'" + str(tinder_token) + "'}'",
+                    'x-client-version': '47217',
+                    'app-version': '467',
+                    'Proxy-Connection': 'keep-alive',
+                    'Accept-Encoding': 'gzip, deflate',
+                    'Accept-Language': 'en-GB;q=1, fr-FR;q=0.9',
+                    'platform': 'ios',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Tinder/4.7.2 (iPhone; iOS 9.2.1; Scale/2.00)',
+                    'Connection': 'keep-alive',
+                    'X-Auth-Token': str(tinder_token),
+                    'os_version': '90000200001'}
+
+
+def change_loc(lat, lon, tinder_token):
     req = requests.post(
-            'https://api.gotindaer.com/user/ping',
-        data=json.dumps({'lat': 39.9167, 'lon': 116.3833})
+        'https://api.gotinder.com/user/ping',
+        headers=get_headers(tinder_token),  # NYC 40.7128 N, 74.0059
+        # tokyo 35.6895 N, 139.6917
+        data=json.dumps({'lat': lat, 'lon': lon})
+    )
+    try:
+        return req.json()
+    except:
+        return None
+
+
+def profile(tinder_token):
+    req = requests.post(
+        'https://api.gotinder.com/profile',
+        headers=get_headers(tinder_token))
+    try:
+        return req.json()
+    except:
+        return None
+
+
+def change_location(tinder_token):
+    req = requests.post(
+        'https://api.gotinder.com/user/ping',
+        headers=get_headers(tinder_token),  # NYC 40.7128 N, 74.0059
+        # tokyo 35.6895 N, 139.6917
+        data=json.dumps({'lat': 35.6895, 'lon': 139.6917})
     )
     try:
         return req.json()
@@ -146,13 +204,29 @@ if __name__ == '__main__':
     while True:
         token = auth_token(fb_auth_token, fb_id)
 
+        print 'tinder token={}'.format(token)
+
+        # print(profile())
+        # exit(0)
+
         if not token:
             print 'could not get token'
             sys.exit(0)
 
-        # print "try to update location"
-        # print change_location()
-        # print "location updated"
+        # lat = 35.6895
+        # lon = 139.6917
+        # for i in range(20):
+        #    new_lon = lon - i
+        #    print('lat = {}, lon = {}'.format(lat, new_lon))
+        #    print(change_loc(lat, new_lon))
+        lat = 34.7
+        lon = 135.5
+        print(change_loc(lat, lon, token))
+        print(profile(token))
+
+        # http://words.alx.red/tinder-api-2-profile-and-geolocation/
+        # print(change_location())
+        # exit(1)
 
         for user in recommendations(token):
             if not user:
@@ -163,6 +237,11 @@ if __name__ == '__main__':
             count_photos = 1
             for urls in user.d['photos']:
                 directory = "data/" + str(user.age) + "/" + str(user.user_id) + "/"
+
+                if 'tinder_rate_limited_id' in directory:
+                    print('Limit reached.')
+                    exit(0)
+
                 if not os.path.exists(directory):
                     os.makedirs(directory)
 
@@ -184,10 +263,12 @@ if __name__ == '__main__':
                         f.write(user.user_id + u'\n')
 
                 else:
-                    print ' -> random nope :('
+                    print ' -> nope'
                     nope(user.user_id)
 
-            except:
+            except Exception, e:
                 print 'networking error %s' % user.user_id
+                print e
+                print str(e)
 
             s = float(randint(250, 2500) / 1000)

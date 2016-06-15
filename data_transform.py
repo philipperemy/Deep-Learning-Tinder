@@ -1,5 +1,5 @@
-from PIL import Image
 import os
+
 import numpy as np
 from scipy import misc
 
@@ -18,21 +18,20 @@ def process_data(old_dir, new_dir, ext):
     N = len(image_paths)
     print "found", N, "images."
     i = 0
+    import shutil
+    import uuid
     for image_path in image_paths:
         try:
             i += 1
             print "reading", image_path, "(", i, "/", N, ")"
-            file_handle = Image.open(image_path)
-            new_resize = (256, 256)
-            print "resizing", file_handle.size, "=>", new_resize
-            file_handle = file_handle.resize(new_resize, Image.ANTIALIAS)
-            dir_name = os.path.dirname(image_path).replace(old_dir, new_dir)
-            file_name = os.path.basename(image_path)
-            new_full_filename = os.path.join(dir_name, file_name)
-            if not os.path.exists(dir_name):
-                os.makedirs(dir_name)
+
+            # new_resize = (256, 256)
+            # print "resizing", file_handle.size, "=>", new_resize
+            # file_handle = file_handle.resize(new_resize, Image.ANTIALIAS)
+            file_name = str(uuid.uuid1()) + os.path.basename(image_path)
+            new_full_filename = os.path.join(new_dir, file_name)
             print "writing to", new_full_filename
-            file_handle.save(new_full_filename)
+            shutil.copy(image_path, new_full_filename)
         except IOError as ioe:
             print "error:", ioe, "skipping."
 
@@ -55,7 +54,7 @@ def load_data(dir_name, ext):
         y_train[i] = int(label == 'like')
         i += 1
 
-        if i % (N/10) == 0 or i == N:
+        if i % (N / 10) == 0 or i == N:
             print "loaded", i, "images in memory."
 
     X_test = X_train
