@@ -28,7 +28,7 @@ The redirection page looks like this : https://www.facebook.com/connect/login_su
 
 where FB_AUTH_TOKEN is your own token.
 
-## Keep in mind that it expires usually within one or two hours. So you must re-active your bot every time.
+### /!\ Keep in mind that the FB_AUTH_TOKEN expires usually within one or two hours. So you must re-active your bot every time.
 
 `API_HOST` is the URL of your NVIDIA Digits server. More information is available here : https://github.com/NVIDIA/DIGITS
 
@@ -39,7 +39,7 @@ Finally, you should have a configuration file that looks like this:
 ```
 {
   "FB_ID": "philippe.remy",
-  "FB_AUTH_TOKEN": "thisisawrongtokennlBGveRJsIdvrzZCOaOZCgCoxiCb8gffoNpa5cKZA6iQPgf9PvLZBeynaCNYkZCqKEE8IwYJm0dM7EAaTTbXcpEewEdaPfFgp2iFcCNsFnEZC3ytViAfsdfdsO6h3jI4T1gZDZD",
+  "FB_AUTH_TOKEN": "thisisawrongtoken_lBGveRJsIdvrzZCOaOZCgCoxiCb8gffoNpa5cKZA6iQPgf9PvLZBeynaCNYkZCqKEE8IwYJm0dM7EAaTTbXcpEewEdaPfFgp2iFcCNsFnEZC3ytViAfsdfdsO6h3jI4T1gZDZD",
   "API_HOST": "http://localhost:5000/",
   "MODEL_ID": "20160619-000820-19f6"
 }
