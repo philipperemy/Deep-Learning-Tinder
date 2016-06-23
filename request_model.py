@@ -11,6 +11,18 @@ from requests import post
 from scipy.misc import imread
 from scipy.misc import imsave
 
+MODEL_THRESHOLD = None
+
+
+def like_or_nope(_filename_paths, model_api_host, model_id):
+    count = 0.0
+    for _url in _filename_paths:
+        count += call_model(imread(_url), api_host=model_api_host, model_id=model_id)
+    print('cumulative score = {}, threshold to be accepted = {}'.format(count, MODEL_THRESHOLD))
+    if count > MODEL_THRESHOLD:
+        return 'like'
+    return 'nope'
+
 
 def call_model(image, api_host='', model_id=''):
     tmp_filename = str(uuid.uuid4()) + '.png'

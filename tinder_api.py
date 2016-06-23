@@ -2,18 +2,14 @@ import json
 
 import requests
 from datetime import datetime
-from scipy.misc import imread
-
-from request_model import call_model
 
 headers = {
     'app_version': '3',
     'platform': 'ios',
 }
 
-# super LIKE '/like/' + likedUserId + '/super'
 
-MODEL_THRESHOLD = None
+# super LIKE '/like/' + likedUserId + '/super'
 
 
 class User(object):
@@ -122,16 +118,6 @@ def nope(user_id):
         raise
 
 
-def like_or_nope(_filename_paths):
-    count = 0.0
-    for _url in _filename_paths:
-        count += call_model(imread(_url))
-    print('count = {}, threshold to be accepted = {}'.format(count, MODEL_THRESHOLD))
-    if count > MODEL_THRESHOLD:
-        return 'like'
-    return 'nope'
-
-
 def get_headers(tinder_token):
     return {'host': 'api.gotinder.com',
             'Authorization': "Token token='#{'" + str(tinder_token) + "'}'",
@@ -169,17 +155,3 @@ def profile(tinder_token):
         return req.json()
     except:
         return None
-
-
-def get_brief_desc(user):
-    output = str(unicode(user))
-    bio = user.d['bio']
-    if bio != '':
-        output += ', bio = {}'.format(bio)
-    jobs = user.d['jobs']
-    if len(jobs) != 0:
-        output += ', jobs = {}'.format(jobs)
-    schools = user.d['schools']
-    if len(schools) != 0:
-        output += ', schools = {}'.format(schools)
-    return output

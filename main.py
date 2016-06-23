@@ -7,6 +7,7 @@ import os
 import sys
 import urllib
 
+import request_model as model
 import tinder_api as ti
 
 # get your tinder token here https://gist.github.com/rtt/10403467
@@ -15,8 +16,10 @@ credentials = json.load(open('credentials.json', 'r'))
 
 fb_id = credentials['FB_ID']
 fb_auth_token = credentials['FB_AUTH_TOKEN']
+model_api_host = str(credentials['API_HOST'])
+model_id = str(credentials['MODEL_ID'])
 
-ti.MODEL_THRESHOLD = 25.0
+model.MODEL_THRESHOLD = 25.0
 
 if __name__ == '__main__':
 
@@ -24,6 +27,8 @@ if __name__ == '__main__':
     print('----------')
     print('FB_ID = {}'.format(fb_id))
     print('FB_AUTH_TOKEN = {}'.format(fb_auth_token))
+    print('MODEL_API_HOST = {}'.format(model_api_host))
+    print('MODEL_ID = {}'.format(model_id))
 
     while True:
         token = ti.auth_token(fb_auth_token, fb_id)
@@ -47,7 +52,7 @@ if __name__ == '__main__':
             if not user:
                 break
 
-            print(ti.get_brief_desc(user))
+            print(unicode(user))
 
             count_photos = 1
             filename_paths = []
@@ -68,7 +73,9 @@ if __name__ == '__main__':
                 urllib.urlretrieve(url, filename_path)
                 filename_paths.append(filename_path)
             try:
-                action = ti.like_or_nope(filename_paths)
+                action = model.like_or_nope(filename_paths,
+                                            model_api_host=model_api_host,
+                                            model_id=model_id)
                 if action == 'like':
                     print(' -> Like')
                     match = ti.like(user.user_id)
@@ -79,6 +86,4 @@ if __name__ == '__main__':
                     ti.nope(user.user_id)
 
             except Exception, e:
-                print('networking error %s' % user.user_id)
                 print(e)
-                print(str(e))
