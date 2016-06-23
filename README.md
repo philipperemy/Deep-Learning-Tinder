@@ -1,5 +1,7 @@
 # Deep-Learning-Tinder
 
+Welcome on the Tinder Bot whose recommandations are based on Deep Learning for image recognition. Don't forget to star or fork this repo if you appreciate the bot! 
+
 ## How to run the bot
 ```
 git clone https://github.com/philipperemy/Deep-Learning-Tinder.git
