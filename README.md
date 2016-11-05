@@ -22,13 +22,7 @@ Otherwise program will exit.
 
 `FB_ID` : the id of your facebook. Your profile is available at https://www.facebook.com/FB_ID where FB_ID is your id.
 
-`FB_AUTH_TOKEN` : Authentification Token of Facebook. Can be accessible here: https://www.facebook.com/dialog/oauth?client_id=464891386855067&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=basic_info,email,public_profile,user_about_me,user_activities,user_birthday,user_education_history,user_friends,user_interests,user_likes,user_location,user_photos,user_relationship_details&response_type=token
-
-Keep in mind that the token appears in the redirection URL and you have only a few seconds to grab it. After a few attempts, you will become better at it.
-
-The redirection page looks like this : https://www.facebook.com/connect/login_success.html#access_token=FB_AUTH_TOKEN&expires_in=3724
-
-where FB_AUTH_TOKEN is your own token.
+`FB_AUTH_TOKEN` : Authentification Token of Facebook. Can be accessible with this method: https://gist.github.com/rtt/10403467#gistcomment-1846343
 
 ### /!\ Keep in mind that the FB_AUTH_TOKEN expires usually within one or two hours. So you must re-active your bot every time.
 
