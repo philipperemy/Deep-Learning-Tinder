@@ -1,7 +1,7 @@
 import json
+from datetime import datetime
 
 import requests
-from datetime import datetime
 
 headers = {
     'app_version': '3',
@@ -87,6 +87,7 @@ def recommendations(auth_token):
         print(r.json())
 
     for result in r.json()['results']:
+        print(result)
         yield User(result)
 
 

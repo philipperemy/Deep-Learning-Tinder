@@ -1,11 +1,8 @@
-#!/usr/bin/env python
-
-from __future__ import print_function
-
 import json
 import os
 import sys
-import urllib
+
+import wget
 
 import request_model as model
 import tinder_api as ti
@@ -61,8 +58,6 @@ if __name__ == '__main__':
             if not user:
                 break
 
-            print(unicode(user))
-
             count_photos = 1
             filename_paths = []
             for urls in user.d['photos']:
@@ -79,7 +74,7 @@ if __name__ == '__main__':
                 filename_path = directory + str(count_photos) + ".png"
                 count_photos += 1
                 print(url, "=>", filename_path)
-                urllib.urlretrieve(url, filename_path)
+                wget.download(url, out=filename_path, bar=None)
                 filename_paths.append(filename_path)
             try:
                 action = model.like_or_nope(filename_paths,
