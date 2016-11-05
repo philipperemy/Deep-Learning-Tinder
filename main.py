@@ -19,7 +19,13 @@ fb_auth_token = credentials['FB_AUTH_TOKEN']
 model_api_host = str(credentials['API_HOST'])
 model_id = str(credentials['MODEL_ID'])
 
-model.MODEL_THRESHOLD = 25.0
+
+def stats(likes, nopes):
+    prop_likes = (float(likes) / (likes + nopes)) * 100.0
+    prop_nopes = 100.0 - prop_likes
+    print('likes = {} ({}%), nopes = {} ({}%)'.format(likes, prop_likes,
+                                                      nopes, prop_nopes))
+
 
 if __name__ == '__main__':
 
@@ -29,6 +35,9 @@ if __name__ == '__main__':
     print('FB_AUTH_TOKEN = {}'.format(fb_auth_token))
     print('MODEL_API_HOST = {}'.format(model_api_host))
     print('MODEL_ID = {}'.format(model_id))
+
+    like_count = 0
+    nope_count = 0
 
     while True:
         token = ti.auth_token(fb_auth_token, fb_id)
@@ -77,13 +86,17 @@ if __name__ == '__main__':
                                             model_api_host=model_api_host,
                                             model_id=model_id)
                 if action == 'like':
+                    like_count += 1
                     print(' -> Like')
+                    stats(like_count, nope_count)
                     match = ti.like(user.user_id)
                     if match:
                         print(' -> Match!')
                 else:
+                    nope_count += 1
                     print(' -> nope')
+                    stats(like_count, nope_count)
                     ti.nope(user.user_id)
 
-            except Exception, e:
+            except Exception as e:
                 print(e)
