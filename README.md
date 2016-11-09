@@ -22,15 +22,15 @@ Otherwise program will exit.
 
 `FB_ID` : the id of your facebook. Your profile is available at https://www.facebook.com/FB_ID where FB_ID is your id.
 
-`FB_AUTH_TOKEN` : Authentification Token of Facebook. Can be accessible with this method: https://gist.github.com/rtt/10403467#gistcomment-1846343
+`FB_EMAIL_ADDRESS` : Your Facebook email address.
 
-### /!\ Keep in mind that the FB_AUTH_TOKEN expires usually within one or two hours. So you must re-active your bot every time.
+`FB_PASSWORD` : Your Facebook password.
 
 `API_HOST` is the URL of your NVIDIA Digits server. More information is available here : https://github.com/NVIDIA/DIGITS
 
 `MODEL_ID` is the ID of your trained model. It appears in the URL when you click on your model in the DIGITS interface, like this: `API_HOST`/models/`MODEL_ID`
 
-Finally, you should have a configuration file that looks like this:
+`FB_EMAIL_ADDRESS` and `FB_PASSWORD` are used to retrieve your `FB_AUTH_TOKEN`, useful to request the Tinder token. and Finally, you should have a configuration file that looks like this:
 
 ```
 {
