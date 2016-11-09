@@ -6,15 +6,7 @@ import wget
 
 import request_model as model
 import tinder_api as ti
-
-# get your tinder token here https://gist.github.com/rtt/10403467
-# and populate the json credentials.json
-credentials = json.load(open('credentials.json', 'r'))
-
-fb_id = credentials['FB_ID']
-fb_auth_token = credentials['FB_AUTH_TOKEN']
-model_api_host = str(credentials['API_HOST'])
-model_id = str(credentials['MODEL_ID'])
+from tinder_token import get_access_token
 
 
 def stats(likes, nopes):
@@ -25,6 +17,12 @@ def stats(likes, nopes):
 
 
 if __name__ == '__main__':
+
+    credentials = json.load(open('credentials.json', 'r'))
+    fb_id = credentials['FB_ID']
+    fb_auth_token = get_access_token(credentials['FB_EMAIL_ADDRESS'], credentials['FB_PASSWORD'])
+    model_api_host = str(credentials['API_HOST'])
+    model_id = str(credentials['MODEL_ID'])
 
     print('Deep Learning Tinder bot')
     print('----------')
