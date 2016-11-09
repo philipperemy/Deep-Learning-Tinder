@@ -30,12 +30,13 @@ Otherwise program will exit.
 
 `MODEL_ID` is the ID of your trained model. It appears in the URL when you click on your model in the DIGITS interface, like this: `API_HOST`/models/`MODEL_ID`
 
-`FB_EMAIL_ADDRESS` and `FB_PASSWORD` are used to retrieve your `FB_AUTH_TOKEN`, useful to request the Tinder token. and Finally, you should have a configuration file that looks like this:
+`FB_EMAIL_ADDRESS` and `FB_PASSWORD` are used to retrieve your `FB_AUTH_TOKEN`, useful to request the Tinder token. Finally, you should have a configuration file that looks like this:
 
 ```
 {
-  "FB_ID": "philippe.remy",
-  "FB_AUTH_TOKEN": "thisisawrongtoken_lBGveRJsIdvrzZCOaOZCgCoxiCb8gffoNpa5cKZA6iQPgf9PvLZBeynaCNYkZCqKEE8IwYJm0dM7EAaTTbXcpEewEdaPfFgp2iFcCNsFnEZC3ytViAfsdfdsO6h3jI4T1gZDZD",
+  "FB_ID": "tim.cook",
+  "FB_EMAIL_ADDRESS": "tim.cook@apple.com",
+  "FB_PASSWORD": "i_love_apple",
   "API_HOST": "http://localhost:5000/",
   "MODEL_ID": "20160619-000820-19f6"
 }
