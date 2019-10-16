@@ -1,5 +1,5 @@
 numpy
 requests
 robobrowser
-scipy
 wget
+lxml

@@ -7,16 +7,18 @@ import os
 import time
 import uuid
 
+import imageio as imageio
 import numpy as np
 from requests import post
-from scipy.misc import imread
-from scipy.misc import imsave
+
+
+# from scipy.misc.pilutil import imread, imsave
 
 
 def like_or_nope(_filename_paths, model_api_host, model_id):
     scores = []
     for _url in _filename_paths:
-        scores.append(call_model(imread(_url), api_host=model_api_host, model_id=model_id))
+        scores.append(call_model(imageio.imread(_url), api_host=model_api_host, model_id=model_id))
     print(scores)
     if np.any(np.array(scores) > 40.0):
         return 'like'
@@ -25,7 +27,7 @@ def like_or_nope(_filename_paths, model_api_host, model_id):
 
 def call_model(image, api_host='', model_id=''):
     tmp_filename = str(uuid.uuid4()) + '.png'
-    imsave(tmp_filename, image)
+    imageio.imsave(tmp_filename, image)
 
     path = '/models/images/classification/classify_one.json'
     files = {'image_file': open(tmp_filename, 'rb')}

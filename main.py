@@ -16,8 +16,7 @@ def stats(likes, nopes):
                                                       nopes, prop_nopes))
 
 
-if __name__ == '__main__':
-
+def main():
     credentials = json.load(open('credentials.json', 'r'))
     fb_id = credentials['FB_ID']
     fb_auth_token = get_access_token(credentials['FB_EMAIL_ADDRESS'], credentials['FB_PASSWORD'])
@@ -93,3 +92,7 @@ if __name__ == '__main__':
 
             except Exception as e:
                 print(e)
+
+
+if __name__ == '__main__':
+    main()
