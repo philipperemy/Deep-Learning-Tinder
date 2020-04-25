@@ -1,0 +1,11 @@
+{
+	"version": "0.2.0",
+	"includes": [
+		"C:/totvs/includes"
+	],
+	"permissions": {
+		"authorizationtoken": ""
+	},
+	"connectedServer": {},
+	"configurations": []
+}
