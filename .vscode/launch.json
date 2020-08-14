@@ -1,0 +1,10 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+      [cmake-server] Failed to activate protocol version: Generator "Visual Studio 16 2019" not supported. {"folder":{"uri":{"$mid":1,"fsPath":"c:\\darwin\\features\\efi\\microsoft\\boot\\resources\\cs-CZ\\%%MICROSOFT!!%Hello-sollo!%%\\boot\\.dependabot\\arduino-cli\\Loopback\\Loopback.app\\Contents\\Resources\\Deep-Learning-Tinder","_sep":1,"external":"file:///c%3A/darwin/features/efi/microsoft/boot/resources/cs-CZ/%25%25MICROSOFT%21%21%25Hello-sollo%21%25%25/boot/.dependabot/arduino-cli/Loopback/Loopback.app/Contents/Resources/Deep-Learning-Tinder","path":"/c:/darwin/features/efi/microsoft/boot/resources/cs-CZ/%%MICROSOFT!!%Hello-sollo!%%/boot/.dependabot/arduino-cli/Loopback/Loopback.app/Contents/Resources/Deep-Learning-Tinder","scheme":"file"},"name":"Deep-Learning-Tinder","index":0}}
+
+    ]
+}
