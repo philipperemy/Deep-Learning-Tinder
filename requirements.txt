@@ -1,5 +1,0 @@
-numpy
-requests
-robobrowser
-wget
-lxml
