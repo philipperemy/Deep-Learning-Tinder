@@ -66,15 +66,12 @@ def auth_token(fb_auth_token, fb_user_id):
     h = headers
     h.update({'content-type': 'application/json'})
     req = requests.post(
-        # 'https://api.gotinder.com/auth',
-        'https://api.gotinder.com/v2/auth/login/facebook',
+        'https://api.gotinder.com/auth',
         headers=h,
-        # data=json.dumps({'facebook_token': fb_auth_token, 'facebook_id': fb_user_id})
-        # data=json.dumps({'facebook_token': fb_auth_token}
-        data=json.dumps({'token': fb_auth_token})
+        data=json.dumps({'facebook_token': fb_auth_token, 'facebook_id': fb_user_id})
     )
     try:
-        return req.json()['data']['api_token']
+        return req.json()['token']
     except:
         return None
 
