@@ -1,0 +1,11 @@
+data/
+*.pyc
+profile_pics/
+profile_pics_resize/
+.idea/
+.DS_Store
+credentials.json
+tinder_api.py
+main.py
+cnn_model.py
+README.md
